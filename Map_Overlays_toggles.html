@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>Display a map</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body {
+  margin: 0;
+  padding: 0;
+}
+
+h2,
+h3 {
+  margin: 10px;
+  font-size: 1.2em;
+}
+
+h3 {
+  font-size: 1em;
+}
+
+p {
+  font-size: 0.85em;
+  margin: 10px;
+  text-align: left;
+}
+
+/**
+* Create a position for the map
+* on the page */
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+/**
+* Set rules for how the map overlays
+* (information box and legend) will be displayed
+* on the page. */
+.map-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.8);
+  margin-right: 20px;
+  font-family: Arial, sans-serif;
+  overflow: auto;
+  border-radius: 3px;
+}
+
+#features {
+  top: 0;
+  height: 100px;
+  margin-top: 20px;
+  width: 250px;
+}
+
+#legend {
+  padding: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 18px;
+  height: 150px;
+  margin-bottom: 40px;
+  width: 100px;
+}
+
+.legend-key {
+  display: inline-block;
+  border-radius: 20%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+}
+
+.legend-text {
+  display: inline-block;
+}
+
+#red{
+  background-color: #e04e3e;
+}
+
+#green{
+  background-color: #47a810;
+}
+
+#orange{
+  background-color: #f3a449;
+}
+
+#menu {
+background: #fff;
+position: absolute;
+z-index: 1;
+top: 35%;
+right: 10px;
+border-radius: 3px;
+width: 120px;
+border: 1px solid rgba(0,0,0,0.4);
+font-family: 'Open Sans', sans-serif;
+}
+ 
+#menu a {
+font-size: 13px;
+color: #404040;
+display: block;
+margin: 0;
+padding: 0;
+padding: 10px;
+text-decoration: none;
+border-bottom: 1px solid rgba(0,0,0,0.25);
+text-align: center;
+}
+ 
+#menu a:last-child {
+border: none;
+}
+ 
+#menu a:hover {
+background-color: #f8f8f8;
+color: #404040;
+}
+ 
+#menu a.active {
+background-color: #3887be;
+color: #ffffff;
+}
+ 
+#menu a.active:hover {
+background: #3074a4;
+}
+  </style>
+</head>
+<body>
+  <nav id="menu"></nav>
+  <div id='map'></div>
+  <div class='map-overlay' id='features'><h2>DT information</h2><div id='pd'><p>Hover over a DT to see its details</p></div></div>
+  <div class='map-overlay' id='legend'>
+    <h3>Legend</h3>
+    <div class="legend-key" id="red"></div>
+    <div class="legend-text">Old DT</div>
+    <br>
+    <div class="legend-key" id="green"></div>
+    <div class="legend-text">New DT</div>
+    <br>
+    <div class="legend-key" id="orange"></div>
+    <div class="legend-text">Overlap</div>
+  </div>
+
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoicGF6enoiLCJhIjoiY2p0aTR5b2FjMDcwMDQzbDk4b2l5OXZ0cCJ9.MG1w6Xn4FvvZC8lrB6lVNA';
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/pazzz/cjtp37hn00hi61fs5jem1jd8x',
+  center: [150.938272, -33.838341],
+  zoom: 10.3
+});
+
+map.on('load', function() {
+
+
+map.on('mousemove', function(e) {
+  var territory = map.queryRenderedFeatures(e.point, {
+    layers: ['DT_0204', 'DT_0801', 'DT in common']
+  });
+    // console.log(territory);
+    document.getElementById('pd').innerHTML = '<h3><strong>' + territory[0].properties.r_a_t + '</strong></h3><p><strong><em>' + territory[0].properties.Resi + '</strong> RESI in this DT</em></p>';
+});
+
+map.getCanvas().style.cursor = 'default';
+
+
+});
+
+var toggleableLayerIds = [ 'DT_0204', 'DT_0801', 'DT in common'];
+ 
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+var id = toggleableLayerIds[i];
+ 
+var link = document.createElement('a');
+link.href = '#';
+link.className = 'active';
+link.textContent = id;
+ 
+link.onclick = function (e) {
+var clickedLayer = this.textContent;
+e.preventDefault();
+e.stopPropagation();
+ 
+var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+ 
+if (visibility === 'visible') {
+map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+this.className = '';
+} else {
+this.className = 'active';
+map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+}
+};
+ 
+var layers = document.getElementById('menu');
+layers.appendChild(link);
+}
+
+
+</script>
+
+</body>
+</html>
