@@ -1,4 +1,5 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoicGF6enoiLCJhIjoiY2p0aTR5b2FjMDcwMDQzbDk4b2l5OXZ0cCJ9.MG1w6Xn4FvvZC8lrB6lVNA';
+
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/pazzz/cjtp37hn00hi61fs5jem1jd8x',
@@ -7,7 +8,6 @@ const map = new mapboxgl.Map({
 });
 
 map.on('load', function() {
-
 
 map.on('mousemove', function(e) {
   var territory = map.queryRenderedFeatures(e.point, {
