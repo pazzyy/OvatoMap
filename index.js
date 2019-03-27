@@ -8,13 +8,13 @@ const map = new mapboxgl.Map({
 });
 
 map.on('load', function() {
-
+console.log(map.getLayer('DT_0204'))
 map.on('mousemove', function(e) {
   var territory = map.queryRenderedFeatures(e.point, {
     layers: ['DT_0204', 'DT_0801', 'DT in common']
   });
     // console.log(territory);
-    document.getElementById('pd').innerHTML = '<h3><strong>' + territory[0].properties.r_a_t + '</strong></h3><p><strong><em>' + territory[0].properties.Resi + '</strong> RESI in this DT</em></p>';
+    document.getElementById('pd').innerHTML = '<h3><strong>' + territory[0].properties.r_a_t + '</strong></h3><p><strong>' + territory[0].properties.Resi + '</strong> RESI in this DT</p>';
 });
 
 map.getCanvas().style.cursor = 'default';
@@ -22,7 +22,7 @@ map.getCanvas().style.cursor = 'default';
 
 });
 
-var toggleableLayerIds = [ 'DT_0204', 'DT_0801', 'DT in common'];
+var toggleableLayerIds = [ 'DT_0204', 'DT_0801', 'DT in common', 'DT_outlines'];
  
 for (var i = 0; i < toggleableLayerIds.length; i++) {
 var id = toggleableLayerIds[i];
