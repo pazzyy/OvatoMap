@@ -12,11 +12,14 @@ map.on('load', function () {
             ]
         });
 
-        if (territory.length > 1) {
-            document.getElementById('pd').innerHTML = '<h3><strong>' + territory[0].properties.r_a_t + '</strong></h3><p><strong>' + territory[0].properties.Resi + '</strong> RESI in this DT</p>';
-        } else {
-            document.getElementById('pd').innerHTML = '<p><strong>No DT selected</strong></p>'
-        };
+        document.getElementById('pd').innerHTML = '<h3><strong>' + territory[0].properties.r_a_t + '</strong></h3><p><strong>' + territory[0].properties.Resi + '</strong> RESI in this DT</p>';
+
+
+        // if (territory.length > 1) {
+        //     document.getElementById('pd').innerHTML = '<h3><strong>' + territory[0].properties.r_a_t + '</strong></h3><p><strong>' + territory[0].properties.Resi + '</strong> RESI in this DT</p>';
+        // } else {
+        //     document.getElementById('pd').innerHTML = '<p><strong>No DT selected</strong></p>'
+        // };
     });
 
 
