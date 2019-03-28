@@ -1,5 +1,4 @@
 map.on('load', function () {
-    map.removeLayer('DT in common copy');
     console.log(map.getStyle())
 
 

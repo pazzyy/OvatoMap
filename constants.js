@@ -7,6 +7,9 @@ const map = new mapboxgl.Map({
     zoom: 10.3
 });
 
+// const mapLayers = map.getStyle().layers;
+
+
 const layersData = {
        DT_0204: {
             layerIds: [],
